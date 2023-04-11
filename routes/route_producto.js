@@ -1,13 +1,9 @@
 var express = require('express');
 var router = express.Router();
-const conexion_mongoose='mongodb+srv://usuario:12345@cluster0.iysppsa.mongodb.net/SD?retryWrites=true'
-const mongoose=require('mongoose');
-const Schema = mongoose.Schema;
-const Producto=mongoose.model("Producto", new Schema({}),'Producto');
+const Producto=require('../schemas/producto');
 
 //Obtener productos
 router.get('/', async function(req, res, next) {
-  await mongoose.connect(conexion_mongoose);
   try{
     const producto=await Producto.find();
     const filtro=[]

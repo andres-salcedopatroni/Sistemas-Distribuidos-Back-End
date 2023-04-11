@@ -1,0 +1,2 @@
+Ejecutar en local:
+set DEBUG=app:* & npm start
