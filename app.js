@@ -31,7 +31,7 @@ app.use(bodyParser.json());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/productos', router_producto);
+app.use('/producto', router_producto);
 app.use('/usuario', router_usuario);
 app.use('/venta', router_venta);
 app.use('/patrocinio', router_patrocinio);

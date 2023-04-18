@@ -15,4 +15,17 @@ router.get('/', async function(req, res, next) {
   }
 });
 
+//Crear patrocinio
+router.post('/crear', async function(req, res, next) {
+  try{
+    console.log(req.body)
+    res.json(await Patrocinio.create(req.body));
+  }
+  catch(err){
+    console.log(err);
+    res.json({ message: err });
+  }
+});
+
+
 module.exports = router;
