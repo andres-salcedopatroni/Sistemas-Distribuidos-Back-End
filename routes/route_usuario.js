@@ -6,14 +6,36 @@ const Usuario=require('../schemas/usuario');
 router.get('/ingreso', async function(req, res, next) {
   try{
     const usuario=await Usuario.findOne({"dni_ruc": req.query.dni_ruc, "clave": req.query.clave},{"dni_ruc":1,"nombre":1,"tipo":1});
-    console.log(usuario);
+    if(usuario)
     res.json(usuario);
+    else
+    res.status(400).json("No existe el usuario");
+    console.log(usuario);
+   
   }
   catch(err){
     console.log(err);
     res.json({ message: err });
   }
 });
+
+//Obtener usuario
+router.get('/obtener', async function(req, res, next) {
+  try{
+    const usuario=await Usuario.findOne({"dni_ruc": req.query.dni_ruc},{"dni_ruc":1,"nombre":1,"tipo":1});
+    if(usuario)
+    res.json(usuario);
+    else
+    res.status(400).json("No usuario ingresado");
+    console.log(usuario);
+    
+  }
+  catch(err){
+    console.log(err);
+    res.json({ message: err });
+  }
+});
+
 
 //Obtener usuarios
 router.get('/usuarios', async function(req, res, next) {
@@ -36,7 +58,7 @@ router.post('/crear', async function(req, res, next) {
   }
   catch(err){
     console.log(err);
-    res.json({ message: err });
+    res.status(400).json({message: err});
   }
 });
 
@@ -54,7 +76,9 @@ router.put('/actualizar', async function(req, res, next) {
 //Eliminar usuario
 router.delete('/eliminar', async function(req, res, next) {
   try{
-    res.json(await Usuario.deleteOne({"dni_ruc": req.query.dni_ruc}));
+    const eliminado=await Usuario.deleteOne({"dni_ruc": req.query.dni_ruc});
+    console.log(eliminado);
+    res.json(eliminado);
   }
   catch(err){
     console.log(err);
