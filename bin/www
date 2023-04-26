@@ -5,8 +5,9 @@
  */
 
 var app = require('../app');
-var debug = require('debug')('back-end:server');
+const debug = require('debug')('back-end:server');
 var http = require('http');
+const WebSocket = require("socket.io");
 
 /**
  * Get port from environment and store in Express.
@@ -21,14 +22,28 @@ app.set('port', port);
 
 var server = http.createServer(app);
 
+
 /**
  * Listen on provided port, on all network interfaces.
  */
 
+
+
+
+const wss = WebSocket(server,{cors:{origins:'http://localhost:4200/'}})
+//new WebSocket.Server({server: server});
+
+console.log(wss);
+
+wss.on('connection', (ws) => {
+  console.log('New client connected!');
+  ws.on('message', (message) => console.log(message));
+  ws.emit('sendMessage', {"hola":"mundo"})
+});
+
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
-
 /**
  * Normalize a port into a number, string, or false.
  */
