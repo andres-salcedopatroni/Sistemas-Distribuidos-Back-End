@@ -38,7 +38,7 @@ console.log(wss);
 wss.on('connection', (ws) => {
   console.log('New client connected!');
   ws.on('message', (message) => console.log(message));
-  ws.emit('sendMessage', {"hola":"mundo"})
+  ws.broadcast.emit('sendMessage', {"hola":"mundo"})
 });
 
 server.listen(port);
