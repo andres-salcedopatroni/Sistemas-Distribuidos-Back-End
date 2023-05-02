@@ -15,26 +15,25 @@ router.get('/', async function(req, res, next) {
   }
 });
 
-//Obtener filtro
+//Obtener filtro-Completo
 router.get('/filtro', async function(req, res, next) {
   try{
-    const producto=await Producto.find();
-    const filtro=[]
-    for (let p in producto) {
-      const s=producto[p].toJSON();
-      if(s.nombre.includes(req.query.nombre)){
-        console.log(s.nombre.includes(req.query.nombre));
-        console.log(req.query.nombre)
-        filtro.push(s);
+    const texto= req.query.nombre.trim();
+    const producto= await Producto.find();
+    const filtro=[];
+    if(texto=='')
+      res.json(producto);
+    else {
+      for (let p in producto) {
+        var elemento=producto[p].toJSON();
+        if(elemento.nombre.includes(texto))
+          filtro.push(elemento);
       }
-        
+      res.json(filtro); 
     }
-    console.log(producto);
-    res.json(filtro);
   }
   catch(err){
-    console.log(err);
-    res.json({ message: err });
+    res.status(400).json(err);
   }
 });
 

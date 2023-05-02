@@ -19,6 +19,28 @@ router.get('/ingreso', async function(req, res, next) {
   }
 });
 
+//Obtener filtro-Completo
+router.get('/filtro', async function(req, res, next) {
+  try{
+    const texto= req.query.nombre.trim();
+    const usuario= await Usuario.find();
+    const filtro=[];
+    if(texto=='')
+      res.json(usuario);
+    else {
+      for (let u in usuario) {
+        var elemento=usuario[u].toJSON();
+        if(elemento.nombre.includes(texto))
+          filtro.push(elemento);
+      }
+      res.json(filtro); 
+    }
+  }
+  catch(err){
+    res.status(400).json(err);
+  }
+});
+
 //Obtener usuario
 router.get('/obtener', async function(req, res, next) {
   try{
