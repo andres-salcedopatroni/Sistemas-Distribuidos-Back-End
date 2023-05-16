@@ -6,12 +6,15 @@ const mongoose=require('mongoose');
 const bodyParser=require('body-parser')
 
 //Rutas
-const router_restaurante = require('./routes/route_restaurante');
+var indexRouter = require('./routes/index');
+var usersRouter = require('./routes/users');
+const router_producto = require('./routes/route_producto');
 const router_usuario = require('./routes/route_usuario');
-const router_reserva = require('./routes/route_reserva');
+const router_venta = require('./routes/route_venta');
+const router_patrocinio = require('./routes/route_patrocinio');
 
 //Conexion Mongo
-const conexion_mongoose='mongodb+srv://usuario:12345@cluster0.iysppsa.mongodb.net/EP?retryWrites=true'
+const conexion_mongoose='mongodb+srv://usuario:12345@cluster0.iysppsa.mongodb.net/SD?retryWrites=true'
 mongoose.connect(conexion_mongoose);
 
 var app = express();
@@ -26,9 +29,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use('/restaurante', router_restaurante);
+app.use('/', indexRouter);
+app.use('/users', usersRouter);
+app.use('/producto', router_producto);
 app.use('/usuario', router_usuario);
-app.use('/reserva', router_reserva);
+app.use('/venta', router_venta);
+app.use('/patrocinio', router_patrocinio);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
