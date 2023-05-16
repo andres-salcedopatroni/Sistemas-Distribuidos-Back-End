@@ -8,7 +8,7 @@ var app = require('../app');
 const debug = require('debug')('back-end:server');
 var http = require('http');
 const WebSocket = require("socket.io");
-const Patrocinio=require('../schemas/patrocinio');
+const Reserva=require('../schemas/reserva');
 
 /**
  * Get port from environment and store in Express.
@@ -43,7 +43,7 @@ wss.on('connection', (ws) => {
   
   ws.on('message',  async (message) => {
     try{
-      const patrocinio=await Patrocinio.find({"codigoPatrocinado":message},{"codigoPatrocinador":1});
+      const patrocinio=await Reserva.find({"codigoPatrocinado":message},{"codigoPatrocinador":1});
       let rooms=[];
       for(let patrocinador of patrocinio){
         rooms.push(patrocinador.codigoPatrocinador);
